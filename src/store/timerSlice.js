@@ -30,6 +30,12 @@ const timerSlice = createSlice({
         timer.status = 'PAUSED';
       }
     },
+    updateRemaining: (state, action) => {
+      const timer = state.timerList.find(t => t.id === action.payload.id);
+      if (timer) {
+        timer.remaining = action.payload.remaining;
+      }
+    },
     completeTimer: (state, action) => {
       const timer = state.timerList.find(t => t.id === action.payload);
       if (timer) {
@@ -40,7 +46,13 @@ const timerSlice = createSlice({
   },
 });
 
-export const { addTimer, startTimer, pauseTimer, resetTimer, completeTimer } =
-  timerSlice.actions;
+export const {
+  addTimer,
+  startTimer,
+  pauseTimer,
+  resetTimer,
+  updateRemaining,
+  completeTimer,
+} = timerSlice.actions;
 
 export default timerSlice.reducer;
