@@ -46,6 +46,32 @@ const timerSlice = createSlice({
     setInitialTimers: (state, action) => {
       state.timerList = action.payload;
     },
+    startAllInCategory: (state, action) => {
+      const category = action.payload;
+      console.log('Starting all timers in category:', category);
+      state.timerList.forEach(timer => {
+        if (timer.category === category && timer.status !== 'COMPLETED') {
+          timer.status = 'RUNNING';
+        }
+      });
+    },
+    pauseAllInCategory: (state, action) => {
+      const category = action.payload;
+      state.timerList.forEach(timer => {
+        if (timer.category === category && timer.status === 'RUNNING') {
+          timer.status = 'PAUSED';
+        }
+      });
+    },
+    resetAllInCategory: (state, action) => {
+      const category = action.payload;
+      state.timerList.forEach(timer => {
+        if (timer.category === category) {
+          timer.remaining = timer.duration;
+          timer.status = 'PAUSED';
+        }
+      });
+    },
   },
 });
 
@@ -57,6 +83,9 @@ export const {
   updateRemaining,
   completeTimer,
   setInitialTimers,
+  startAllInCategory,
+  pauseAllInCategory,
+  resetAllInCategory,
 } = timerSlice.actions;
 
 export default timerSlice.reducer;

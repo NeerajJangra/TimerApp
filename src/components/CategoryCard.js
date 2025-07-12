@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDispatch } from 'react-redux';
+import {
+  pauseAllInCategory,
+  resetAllInCategory,
+  startAllInCategory,
+} from '../store/timerSlice';
 import TimerItem from './TimerItem';
 
 const CategoryCard = ({ category, timers }) => {
   const [expanded, setExpanded] = useState(false);
   console.log('timers in category', { timers });
+  const dispatch = useDispatch();
+
+  const handleStartAll = () => dispatch(startAllInCategory(category.name));
+  const handlePauseAll = () => dispatch(pauseAllInCategory(category.name));
+  const handleResetAll = () => dispatch(resetAllInCategory(category.name));
 
   return (
     <View style={styles.container}>
@@ -29,8 +40,28 @@ const CategoryCard = ({ category, timers }) => {
       {/* Expanded Area */}
       {expanded && (
         <>
+          <View style={styles.bulkActions}>
+            <TouchableOpacity
+              style={[styles.bulkButton, { backgroundColor: '#28a745' }]}
+              onPress={handleStartAll}
+            >
+              <Text style={styles.bulkText}>Start All</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.bulkButton, { backgroundColor: '#ffc107' }]}
+              onPress={handlePauseAll}
+            >
+              <Text style={styles.bulkText}>Pause All</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.bulkButton, { backgroundColor: '#dc3545' }]}
+              onPress={handleResetAll}
+            >
+              <Text style={styles.bulkText}>Reset All</Text>
+            </TouchableOpacity>
+          </View>
           {timers.map(timer => (
-            <TimerItem timer={timer} />
+            <TimerItem timer={timer} key={timer.id} />
           ))}
         </>
       )}
