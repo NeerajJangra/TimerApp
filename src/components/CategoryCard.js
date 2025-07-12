@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TimerItem from './TimerItem';
 
 const CategoryCard = ({ category, timers }) => {
   const [expanded, setExpanded] = useState(false);
+  console.log('timers in category', { timers });
 
   return (
     <View style={styles.container}>
@@ -35,11 +30,9 @@ const CategoryCard = ({ category, timers }) => {
       {expanded && (
         <>
           {/* Timer List */}
-          <FlatList
-            data={timers}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => <TimerItem timer={item} />}
-          />
+          {timers.map(timer => (
+            <TimerItem timer={timer} />
+          ))}
         </>
       )}
     </View>

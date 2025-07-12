@@ -8,10 +8,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { addTimer } from '../store/timerSlice';
 
 import { useNavigation } from '@react-navigation/native';
 
 const AddTimerScreen = () => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [duration, setDuration] = useState('');
   const [category, setCategory] = useState('');
@@ -35,8 +39,7 @@ const AddTimerScreen = () => {
       createdAt: new Date().toISOString(),
     };
 
-    // Later: Save to state via Redux Toolkit
-    console.log('Saving Timer:', newTimer);
+    dispatch(addTimer(newTimer));
     navigation.goBack();
   };
 

@@ -1,39 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  timerList: [
-    {
-      name: 'Workout',
-      running: 1,
-      completed: 1,
-      timers: [
-        {
-          id: '1',
-          name: 'HIIT Training',
-          time: '2:45',
-          status: 'RUNNING',
-          progress: 0.67,
-          halfway: true,
-        },
-        {
-          id: '2',
-          name: 'Rest Period',
-          time: '1:30',
-          status: 'PAUSED',
-          progress: 0.25,
-          halfway: false,
-        },
-        {
-          id: '3',
-          name: 'Warm Up',
-          time: '0:00',
-          status: 'COMPLETED',
-          progress: 1,
-          halfway: false,
-        },
-      ],
-    },
-  ],
+  timerList: [],
 };
 
 const timerSlice = createSlice({

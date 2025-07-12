@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,45 +10,50 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CategoryCard from '../components/CategoryCard';
 
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { groupTimersByCategory } from '../utils/utils';
 
-const dummyData = [
-  {
-    name: 'Workout',
-    running: 1,
-    completed: 1,
-    timers: [
-      {
-        id: '1',
-        name: 'HIIT Training',
-        time: '2:45',
-        status: 'RUNNING',
-        progress: 0.67,
-        halfway: true,
-      },
-      {
-        id: '2',
-        name: 'Rest Period',
-        time: '1:30',
-        status: 'PAUSED',
-        progress: 0.25,
-        halfway: false,
-      },
-      {
-        id: '3',
-        name: 'Warm Up',
-        time: '0:00',
-        status: 'COMPLETED',
-        progress: 1,
-        halfway: false,
-      },
-    ],
-  },
-];
+const dummyData = [];
 
 const HomeScreen = () => {
+  const timers = useSelector(state => state.timers.timerList);
+  console.log('Data from Redux:', timers);
+  const grouped = groupTimersByCategory(timers);
+  const categories = Object.keys(grouped);
+  console.log({ categories });
   const navigation = useNavigation();
+  // return (
+  //   <View style={styles.container}>
+  //     <View style={styles.header}>
+  //       <Text style={styles.heading}>My Timers</Text>
+  //       <TouchableOpacity
+  //         style={styles.addButton}
+  //         onPress={() => navigation.navigate('AddTimer')}
+  //       >
+  //         <Ionicons name="add" size={24} color="#fff" />
+  //       </TouchableOpacity>
+  //     </View>
+
+  //     <FlatList
+  //       data={dummyData}
+  //       keyExtractor={item => item.name}
+  //       renderItem={({ item }) => (
+  //         <CategoryCard category={item} timers={item.timers} />
+  //       )}
+  //       contentContainerStyle={{ paddingHorizontal: 16 }}
+  //       ListEmptyComponent={
+  //         <View>
+  //           <Text style={[styles.heading, { fontSize: 20 }]}>
+  //             Your Timer List is empty
+  //           </Text>
+  //         </View>
+  //       }
+  //     />
+  //   </View>
+  // );
   return (
     <View style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.heading}>My Timers</Text>
         <TouchableOpacity
@@ -59,14 +64,32 @@ const HomeScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <FlatList
-        data={dummyData}
-        keyExtractor={item => item.name}
-        renderItem={({ item }) => (
-          <CategoryCard category={item} timers={item.timers} />
+      {/* Categories */}
+      <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
+        {categories.length === 0 ? (
+          <Text style={{ textAlign: 'center', marginTop: 40 }}>
+            No timers yet. Add one!
+          </Text>
+        ) : (
+          categories.map(cat => {
+            const timersInCat = grouped[cat];
+            const running = timersInCat.filter(
+              t => t.status === 'RUNNING',
+            ).length;
+            const completed = timersInCat.filter(
+              t => t.status === 'COMPLETED',
+            ).length;
+
+            return (
+              <CategoryCard
+                key={cat}
+                category={{ name: cat, running, completed }}
+                timers={timersInCat}
+              />
+            );
+          })
         )}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
-      />
+      </ScrollView>
     </View>
   );
 };

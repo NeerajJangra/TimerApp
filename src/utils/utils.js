@@ -10,3 +10,19 @@ export const getStatusColor = status => {
       return '#6c757d';
   }
 };
+
+export const groupTimersByCategory = timers => {
+  const grouped = {};
+  timers.forEach(timer => {
+    const cat = timer.category;
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(timer);
+  });
+
+  return grouped;
+};
+export const formatTime = seconds => {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+};
