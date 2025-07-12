@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   timerList: [],
+  historyList: [],
 };
 
 const timerSlice = createSlice({
@@ -80,6 +81,18 @@ const timerSlice = createSlice({
         timer.hasShownHalfway = true;
       }
     },
+    addToHistory: (state, action) => {
+      const { id, name } = action.payload;
+
+      state.historyList.push({
+        id,
+        name,
+        completedAt: new Date().toISOString(),
+      });
+    },
+    setInitialHistory: (state, action) => {
+      state.historyList = action.payload;
+    },
   },
 });
 
@@ -95,6 +108,8 @@ export const {
   pauseAllInCategory,
   resetAllInCategory,
   setHalfwayShown,
+  addToHistory,
+  setInitialHistory,
 } = timerSlice.actions;
 
 export default timerSlice.reducer;

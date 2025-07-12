@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { saveTimersToStorage } from '../utils/storage';
+import { saveHistoryToStorage, saveTimersToStorage } from '../utils/storage';
 import timerReducer from './timerSlice';
 
 export const store = configureStore({
@@ -11,4 +11,5 @@ export const store = configureStore({
 store.subscribe(() => {
   const state = store.getState();
   saveTimersToStorage(state.timers.timerList);
+  saveHistoryToStorage(state.timers.historyList);
 });

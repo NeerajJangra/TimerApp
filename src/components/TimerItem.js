@@ -11,6 +11,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import {
+  addToHistory,
   completeTimer,
   pauseTimer,
   resetTimer,
@@ -75,6 +76,8 @@ const TimerItem = ({ timer }) => {
         } else {
           dispatch(completeTimer(timer.id));
           clearInterval(intervalRef.current);
+          dispatch(completeTimer(timer.id));
+          dispatch(addToHistory({ id: timer.id, name: timer.name }));
           setShowModal(true);
         }
       }, 1000);
