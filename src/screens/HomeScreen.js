@@ -22,45 +22,15 @@ const HomeScreen = () => {
   const categories = Object.keys(grouped);
   console.log({ categories });
   const navigation = useNavigation();
-  // return (
-  //   <View style={styles.container}>
-  //     <View style={styles.header}>
-  //       <Text style={styles.heading}>My Timers</Text>
-  //       <TouchableOpacity
-  //         style={styles.addButton}
-  //         onPress={() => navigation.navigate('AddTimer')}
-  //       >
-  //         <Ionicons name="add" size={24} color="#fff" />
-  //       </TouchableOpacity>
-  //     </View>
-
-  //     <FlatList
-  //       data={dummyData}
-  //       keyExtractor={item => item.name}
-  //       renderItem={({ item }) => (
-  //         <CategoryCard category={item} timers={item.timers} />
-  //       )}
-  //       contentContainerStyle={{ paddingHorizontal: 16 }}
-  //       ListEmptyComponent={
-  //         <View>
-  //           <Text style={[styles.heading, { fontSize: 20 }]}>
-  //             Your Timer List is empty
-  //           </Text>
-  //         </View>
-  //       }
-  //     />
-  //   </View>
-  // );
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.heading}>My Timers</Text>
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => navigation.navigate('AddTimer')}
         >
-          <Ionicons name="add" size={24} color="#fff" />
+          <Ionicons name="add" size={40} color="#fff" />
         </TouchableOpacity>
       </View>
 
@@ -97,11 +67,15 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: '#f5f5f5' },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
   },
   heading: { fontSize: 24, fontWeight: 'bold' },
   addButton: {

@@ -19,6 +19,7 @@ import {
   startTimer,
   updateRemaining,
 } from '../store/timerSlice';
+import { sendLocalNotification } from '../utils/notifications';
 import { formatTime, getStatusColor } from '../utils/utils';
 import CompletionModal from './CompletionModal';
 
@@ -76,9 +77,12 @@ const TimerItem = ({ timer }) => {
         } else {
           dispatch(completeTimer(timer.id));
           clearInterval(intervalRef.current);
-          dispatch(completeTimer(timer.id));
           dispatch(addToHistory({ id: timer.id, name: timer.name }));
           setShowModal(true);
+          sendLocalNotification(
+            '✅ Timer Completed',
+            `"${timer.name}" is done!`,
+          );
         }
       }, 1000);
     }
@@ -160,9 +164,10 @@ const styles = StyleSheet.create({
   container: {
     padding: 12,
     marginVertical: 6,
-    borderRadius: 10,
+    // borderRadius: 10,
     backgroundColor: '#f9f9f9',
-    // flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
     justifyContent: 'space-between',
   },
   header: {
