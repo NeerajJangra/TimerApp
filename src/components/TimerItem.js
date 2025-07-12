@@ -6,7 +6,6 @@ import { getStatusColor } from '../utils/utils';
 const TimerItem = ({ timer }) => {
   return (
     <View style={styles.container}>
-      {/* Title & Time */}
       <View style={styles.info}>
         <Text style={styles.name}>{timer.name}</Text>
         <Text style={styles.time}>{timer.time}</Text>
@@ -14,8 +13,6 @@ const TimerItem = ({ timer }) => {
           {timer.status}
         </Text>
       </View>
-
-      {/* Controls */}
       <View style={styles.controls}>
         <TouchableOpacity>
           <Ionicons
