@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
@@ -10,11 +10,13 @@ import {
   updateRemaining,
 } from '../store/timerSlice';
 import { formatTime, getStatusColor } from '../utils/utils';
+import CompletionModal from './CompletionModal';
 
 const TimerItem = ({ timer }) => {
   console.log('TimerItem:', timer);
   const dispatch = useDispatch();
   const intervalRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handleToggle = () => {
     if (timer.status === 'RUNNING') {
@@ -29,7 +31,6 @@ const TimerItem = ({ timer }) => {
   };
 
   const progress = timer.remaining / timer.duration;
-  // const intervalRef = useRef(null);
   const remainingRef = useRef(timer.remaining);
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const TimerItem = ({ timer }) => {
         } else {
           dispatch(completeTimer(timer.id));
           clearInterval(intervalRef.current);
+          setShowModal(true);
         }
       }, 1000);
     }
@@ -113,6 +115,11 @@ const TimerItem = ({ timer }) => {
           ]}
         />
       </View>
+      <CompletionModal
+        visible={showModal}
+        timerName={timer.name}
+        onClose={setShowModal}
+      />
     </View>
   );
 };
