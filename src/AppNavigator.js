@@ -7,7 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 
 const Tab = createBottomTabNavigator();
 
-export default function AppNavigator() {
+export const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -26,4 +26,4 @@ export default function AppNavigator() {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};

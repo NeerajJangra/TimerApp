@@ -1,12 +1,17 @@
-import { View, Text } from 'react-native';
 import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const HistoryScreen = () => {
   return (
-    <View>
-      <Text>HistoryScreen</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Timer History</Text>
     </View>
   );
 };
 
 export default HistoryScreen;
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  text: { fontSize: 18, fontWeight: '600' },
+});
