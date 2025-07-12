@@ -29,7 +29,6 @@ const CategoryCard = ({ category, timers }) => {
       {/* Expanded Area */}
       {expanded && (
         <>
-          {/* Timer List */}
           {timers.map(timer => (
             <TimerItem timer={timer} />
           ))}

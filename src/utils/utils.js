@@ -21,6 +21,7 @@ export const groupTimersByCategory = timers => {
 
   return grouped;
 };
+
 export const formatTime = seconds => {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;

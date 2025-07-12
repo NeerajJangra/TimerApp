@@ -71,7 +71,7 @@ const HomeScreen = () => {
             No timers yet. Add one!
           </Text>
         ) : (
-          categories.map(cat => {
+          categories.map((cat, index) => {
             const timersInCat = grouped[cat];
             const running = timersInCat.filter(
               t => t.status === 'RUNNING',
@@ -82,7 +82,7 @@ const HomeScreen = () => {
 
             return (
               <CategoryCard
-                key={cat}
+                key={index}
                 category={{ name: cat, running, completed }}
                 timers={timersInCat}
               />

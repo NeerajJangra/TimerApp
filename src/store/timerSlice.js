@@ -43,6 +43,9 @@ const timerSlice = createSlice({
         timer.remaining = 0;
       }
     },
+    setInitialTimers: (state, action) => {
+      state.timerList = action.payload;
+    },
   },
 });
 
@@ -53,6 +56,7 @@ export const {
   resetTimer,
   updateRemaining,
   completeTimer,
+  setInitialTimers,
 } = timerSlice.actions;
 
 export default timerSlice.reducer;
