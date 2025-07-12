@@ -28,6 +28,7 @@ const timerSlice = createSlice({
       if (timer) {
         timer.remaining = timer.duration;
         timer.status = 'PAUSED';
+        timer.hasShownHalfway = false;
       }
     },
     updateRemaining: (state, action) => {
@@ -69,8 +70,15 @@ const timerSlice = createSlice({
         if (timer.category === category) {
           timer.remaining = timer.duration;
           timer.status = 'PAUSED';
+          timer.hasShownHalfway = false;
         }
       });
+    },
+    setHalfwayShown: (state, action) => {
+      const timer = state.timerList.find(t => t.id === action.payload);
+      if (timer) {
+        timer.hasShownHalfway = true;
+      }
     },
   },
 });
@@ -86,6 +94,7 @@ export const {
   startAllInCategory,
   pauseAllInCategory,
   resetAllInCategory,
+  setHalfwayShown,
 } = timerSlice.actions;
 
 export default timerSlice.reducer;

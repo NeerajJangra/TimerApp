@@ -36,6 +36,7 @@ const AddTimerScreen = () => {
       category,
       status: 'PAUSED',
       halfway: halfwayAlert,
+      hasShownHalfway: false,
       createdAt: new Date().toISOString(),
     };
 

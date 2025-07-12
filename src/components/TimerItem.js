@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  AlertIOS,
+  Platform,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import {
   completeTimer,
   pauseTimer,
   resetTimer,
+  setHalfwayShown,
   startTimer,
   updateRemaining,
 } from '../store/timerSlice';
@@ -33,6 +42,16 @@ const TimerItem = ({ timer }) => {
   const progress = timer.remaining / timer.duration;
   const remainingRef = useRef(timer.remaining);
 
+  const showHalfwayToast = name => {
+    console.log('showHalfwayToast called with name:', name);
+    const msg = `⏳ Halfway Reached: "${name}" is halfway done!`;
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
+    }
+  };
+
   useEffect(() => {
     remainingRef.current = timer.remaining;
   }, [timer.remaining]);
@@ -40,6 +59,14 @@ const TimerItem = ({ timer }) => {
   useEffect(() => {
     if (timer.status === 'RUNNING') {
       intervalRef.current = setInterval(() => {
+        if (
+          timer.halfway &&
+          !timer.hasShownHalfway &&
+          remainingRef.current === Math.floor(timer.duration / 2)
+        ) {
+          dispatch(setHalfwayShown(timer.id));
+          showHalfwayToast(timer.name);
+        }
         if (remainingRef.current > 1) {
           remainingRef.current = remainingRef.current - 1;
           dispatch(
